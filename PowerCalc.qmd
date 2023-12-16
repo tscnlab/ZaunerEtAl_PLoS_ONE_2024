@@ -99,6 +99,8 @@ A total of 26 files are in the folder (13 participants, 2 seasons each). They ar
 Participant.IDs <- c("WRC5", "WOL2", "WNC1", "SIM1", "MIH2", "MES8", "LIR1",
                      "HNN1", "DWM1", "D7EB", "CET8", "BLD3", "AET3")
 
+N_participants <- length(Participant.IDs)
+
 #list all the files
 files <- list.files(path = "Data", pattern = "*.csv", full.names = TRUE)
 files_xlsx <- list.files(path = "Data", pattern = "*.xlsx", full.names = TRUE)
@@ -427,7 +429,7 @@ LLdata %>% group_by(Id, Season, Day = date(Datetime)) %>%
   mutate(valid_Day =
            (NonWear < (1-valid_data_threshold)) %>%
            factor() %>%
-           forcats::fct_recode("valid Day" = "TRUE", "invalid Day" = "FALSE"),
+           forcats::fct_recode("Valid days" = "TRUE", "Invalid days" = "FALSE"),
          Id = forcats::fct_drop(Id)
          )
 
@@ -514,7 +516,7 @@ ggsave("Figures/Figure3.png", Figure.3, height = 21, width = 17, units='cm')
 
 #filter the data to only include valid days
 LLdata <- LLdata %>% 
-  filter(valid_Day == "valid Day") %>% 
+  filter(valid_Day == "Valid days") %>% 
   select(-valid_Day, -NonWear)
 
 ```
@@ -803,7 +805,9 @@ Power_summary %>%
     tab_footnote(
     footnote = 
       paste0(
-        "The sample size calculation is based on a bootstrap resampling of daily metrics between winter and summer seasons for 11 participants. For each resampled dataset, significance was tested in a mixed-effect model with a significance level of ", 
+        "The sample size calculation is based on a bootstrap resampling of daily metrics between winter and summer seasons for ",
+        N_participants,
+        " participants. For each resampled dataset, significance was tested in a mixed-effect model with a significance level of ", 
         sign_level, 
         ". The fraction of significant differences was compared against the power level threshold of ", 
         Power_level, 
