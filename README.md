@@ -30,9 +30,14 @@ The folder `Results` contains a csv file with the results of the power
 analysis depending on sample size and metric. Running the script with
 1000 resamples for sample sizes between 3 and 50 for 12 metrics takes
 about 2-3 hours on an M1 Max MacbookPro (adding up to 576,000
-resamples/tests). If you uncomment line `717` in the code, and comment
-out the rest of the `statistics` chunk as well as the `bootstrapping`
-chunk, most of the computation time can be stripped.
+resamples/tests). To reduce computation time, you can:
+
+- Uncomment line `717` in the code, and comment out the rest of the
+  `statistics` chunk as well as the `bootstrapping` chunk
+
+- reduce the number of bootstraps, e.g., by reducing `n_samples` from
+  1000 to 10. Or by reducing the range of sample sizes, e.g.,
+  `sample_size_max` from 50 to 25.
 
 Most important parameters are found in the YAML:
 
